@@ -1,0 +1,18 @@
+# Use a lightweight base image
+FROM alpine:latest
+
+# Install SQLite
+RUN apk update && apk add sqlite
+
+# Set the working directory
+WORKDIR /app
+
+# Copy your database initialization script
+COPY scripts/create-database.sh /app/scripts/create-database.sh
+RUN chmod +x /app/scripts/create-database.sh
+
+# Expose any necessary ports (if your SQLite setup requires it)
+# EXPOSE 1234
+
+# Start your database initialization script
+CMD ["/app/scripts/create-database.sh"]
